@@ -10,6 +10,7 @@ try:
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
     from PyQt5.QtGui import *
+    import traceback
 except Exception as _err:
     Tk().withdraw()
     warn3=showwarning('WARNING','检测到有组件尚未导入，请检查后再试。\n错误详情：%s'%_err)
@@ -104,9 +105,11 @@ class Form1(QDialog):
                     self.outputdir=result_
                     self.update_UI()
             except Exception as _err:
+                _err=traceback.format_exc()
                 # QInputDialog.getText(self,'checkrules1提示',"错误：%s"%_err)
                 pass
         except Exception as _err:
+                _err=traceback.format_exc()
                 # QInputDialog.getText(self,'checkrules2提示',"错误：%s"%_err)
                 pass
 
@@ -118,11 +121,12 @@ class Form1(QDialog):
                 result=reobj.search(file)
                 if result:
                     result_.append(file)
-                    # QInputDialog.getText(self,'runcheck提示',"错误：%s"%file)
+                    # QInputDialog.getText(self,'runcheck测试',正在添加：%s"%file)
                     pass
             return result_
         except Exception as _err:
-            # QInputDialog.getText(self,'runcheck提示2',"错误：%s"%_err)
+            _err=traceback.format_exc()
+            # QInputDialog.getText(self,'正则表达验证错误',"错误：%s"%(_err))
             pass
 
     def update_UI(self):
@@ -135,15 +139,21 @@ class Form1(QDialog):
             except:
                 pass
         except Exception as _err:
-            QInputDialog.getText(self,'update提示',"错误：%s"%_err)
+            # QInputDialog.getText(self,'update提示',"错误：%s"%_err)
             pass
 
         for findfile in self.inputdir:
-            if findfile in self.outputdir:  
-                QListWidgetItem(findfile,self.folder_in).setForeground(QColor(200,111,100))
+            if self.outputdir != None:
+                try:
+                    if findfile in self.outputdir:  
+                        QListWidgetItem(findfile,self.folder_in).setForeground(QColor(200,111,100))
+                    else:
+                        QListWidgetItem(findfile,self.folder_in)
+                except Exception as _err:
+                    _err=traceback.format_exc()
+                    # QInputDialog.getText(self,'输出列表错误',"错误：%s,%s"%(_err,self.outputdir))  
             else:
                 QListWidgetItem(findfile,self.folder_in)
-            
 
 if __name__=="__main__":
     
