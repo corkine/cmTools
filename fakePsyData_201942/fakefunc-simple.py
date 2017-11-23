@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os,random
-os.chdir("C:/Users/Corkine/Desktop")
+os.chdir("C:/Users/Admin/Desktop")
 file = open("data.txt",'r')
 data={}
 title=[]
