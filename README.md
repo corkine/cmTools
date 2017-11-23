@@ -19,7 +19,7 @@
 
 ![](media/fake.png)
 
-- 位置：[https://github.com/corkine/cmTools/tree/master/fakePsyData_201942](fakePsyData_201942/FAKEDATA.pyw)
+- 位置：[fakePsyData_201942/FAKEDATA.pyw](https://github.com/corkine/cmTools/tree/master/fakePsyData_201942)
 - 说明：此程序根据 data.txt 文件生成新的数据文件。每生成一个新的文件的过程中，程序会随机选择已有的一条数据，对于其性别、年龄、问卷值进行自定义偏移。
 - 亮点：生成的数据和之前的数据不重复，但是满足相似的正态分布，具有相似的方差和平均值。我们根据200份数据生成了10000份数据，在SPSS中进行分析，发现其平均值和方差均一样(小数点后两位)，选择的数据偏移比为1；8；1。
 - 使用方法：选择 data.txt 文件，加载到程序，点击开始，选择需要的份数、性别比例、年龄区间以及已有值得偏移之比，如果为0：1：0，则数据偏移-1，0，1个单位（五点计分，如果原始数值为4，则偏移后分别为3，4，5）的比例为0：1：0，这就生成了和原始数据一样的值。
