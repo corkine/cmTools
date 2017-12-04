@@ -6,11 +6,11 @@ import PyQt5
 from PyQt5.QtGui import QClipboard,QGuiApplication
 from PyQt5.QtWidgets import QDialog,QApplication,QPushButton,QTextBrowser,QVBoxLayout,QHBoxLayout,QMessageBox,QTextEdit
 __TITLE__ = '论文复制行间断去除'
-__VERSION__ = "0.6.0"
+__VERSION__ = "0.6.1"
 class Form(QDialog):
     def __init__(self,parent=None):
         super(Form,self).__init__(parent)
-        self.info_label = '请将需要处理的文本复制到剪贴板'
+        self.info_label = '请将需要处理的文本复制到剪贴板，然后返回本程序'
         self.info_label2 = QPushButton("使用帮助")
         self.info_label3 = QPushButton("关于本程序")
         self.info_label4 = QPushButton("复制到剪贴板(&C)")
@@ -20,7 +20,7 @@ class Form(QDialog):
         # self.dirty = False
         self.textbrowser2 = QTextEdit()
         self.textbrowser = QTextBrowser()
-        self.setWhatsThis("这是一个快速移除空格的小程序")
+        self.setWhatsThis("这是一个快速移除论文断行的小程序，详情请查看“使用帮助”")
         layout = QVBoxLayout()
         layout_child = QHBoxLayout()
         layout_child.addStretch()
@@ -42,6 +42,10 @@ class Form(QDialog):
         clipboard=QGuiApplication.clipboard()
         try:
             self.beforedoit = clipboard.text()
+            if self.textbrowser.toPlainText() == self.beforedoit:
+                raise ValueError("没什么新内容需要处理")
+            if self.beforedoit == '':
+                raise ValueError('剪贴板为空')
             self.textbrowser2.setText(self.beforedoit)
             self.beforedoit = self.beforedoit.replace('\n',' ')
             if self.beforedoit == self.textbrowser2.toPlainText():
@@ -53,7 +57,7 @@ class Form(QDialog):
             self.info_label = '处理完毕，更新后的文本已复制到你的剪贴板'
             clipboard.setText(self.beforedoit)
         except:
-            self.info_label = '[未检测到内容]请将需要处理的文本复制到剪贴板'
+            self.info_label = '[未检测到内容]请将需要处理的文本复制到剪贴板，然后返回本程序'
             
         self.textbrowser.setText(self.beforedoit)
         # self.textbrowser.selectAll()
@@ -83,7 +87,7 @@ class Form(QDialog):
 <html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
 </style></head><body style=" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;">
-<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">本文档适用于版本 0.6.0，当前软件版本为 %s</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">本文档适用于版本 0.6.1，当前软件版本为 %s</p>
 <p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
 <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-size:12pt; font-weight:600; text-decoration: underline;">简要介绍：</span></p>
 <p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
