@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*- 
-import sys
+import sys,traceback
 import PyQt5
 # from PyQt5.QtCore import 
 from PyQt5.QtGui import QClipboard,QGuiApplication
@@ -36,6 +36,7 @@ class Form(QDialog):
         self.info_label2.clicked.connect(self.showHelp)
         self.info_label3.clicked.connect(self.showAbout)
         self.info_label4.clicked.connect(self.pastetoClipboard)
+        self.textbrowser2.textChanged.connect(self.doitByhand)
     def enterEvent(self, event = None):
         # print("SHOW!")
         clipboard=QGuiApplication.clipboard()
@@ -44,7 +45,7 @@ class Form(QDialog):
             self.textbrowser2.setText(self.beforedoit)
             self.beforedoit = self.beforedoit.replace('\n',' ')
             if self.beforedoit == self.textbrowser2.toPlainText():
-                self.info_label4.setText("复制到剪贴板(&C)")
+                # self.info_label4.setText("复制到剪贴板(&C)")
                 raise ValueError("没什么需要处理的")
             else:
                 self.info_label4.setText("复制到剪贴板(&C)")
@@ -63,6 +64,18 @@ class Form(QDialog):
     #     action1 = menu.addAction("使用说明")
     #     action2 = menu.addAction("关于本软件")
     #     menu.exec_(event.globalPos())
+    def doitByhand(self):
+        try:
+            self.textbrowser.setText(self.textbrowser2.toPlainText().replace('\n',' '))
+            clipboard=QGuiApplication.clipboard()
+            clipboard.setText(self.textbrowser.toPlainText())
+            self.info_label4.setText("复制到剪贴板(&C)")
+        except:
+            traceback.print_exc()
+
+
+
+
 
     def showHelp(self):
         QMessageBox.about(self,"使用帮助","""
